@@ -124,7 +124,8 @@ public class Parser{
 	**/
 	public void varDef(){
 		recognize(Lexer.INT);
-		recognize(Lexer.VARIABLE);
+		//recognize(Lexer.VARIABLE);
+		recognizeVariable();
 	}
 	/**
 		Function statementList: verifies the production <statementList>::=<statement> {<statement>}
@@ -138,8 +139,8 @@ public class Parser{
 	}
 
 	/**
-		Function statement: verifies the production <statement>::= read <variable> | print <variable> | call <variable> <lparen> [ <argumentList> ] <rparen>
-	**/
+		Function statement: verifies the production <statement>::= read <variable> | print <variable> | call <variable> <lparen> [ <argumentList> ] <rparen> | <conditional> | <while> | <assignment>	
+		**/
 	public boolean statement(){
 		boolean r = false;
 		//checks for read <variable>
@@ -172,7 +173,17 @@ public class Parser{
 		}
 		else if (lexer.getCurrentToken().code == Lexer.IF){
 			conditional();
-			System.out.println("conditional function ok!");
+			System.out.println("conditional ok!");
+			r = true;
+		}
+		else if(lexer.getCurrentToken().code == Lexer.WHILE){
+			cicloWhile();
+			System.out.println("while ok!");
+			r = true;
+		}
+		else if(lexer.getCurrentToken().code == Lexer.VARIABLE){
+			assignment();
+			System.out.println("assignment ok!");
 			r = true;
 		}
 		return r;
@@ -201,28 +212,51 @@ public class Parser{
 	
 	**/
 	public void recognizeVariable(){
-		recognize(Lexer.VARIABLE);
+
+		if(token.text.length()>1){	//213
+			if(letter(token.text.charAt(0))){
+				for(int i = 1; i<token.text.length(); i++){
+					if(!letter(token.text.charAt(i))||!digit(token.text.charAt(i)))
+					System.out.println("Syntax error in line " + token.line);
+					System.out.println("The variable cannot be declared using that syntax rule.");
+					//STOP!
+					System.exit(3);
+				}
+				recognize(Lexer.VARIABLE);
+			}
+			else
+				if(recognizeConstant())		// 7 = 3
+					lexer.getCurrentToken().code = Lexer.CONSTANT;
+				recognize(Lexer.CONSTANT);
+			
+		}
+		else
+			if(letter(token.text.charAt(0))){
+				recognize(Lexer.VARIABLE);
+			}
+				
+			else if(digit(token.text.charAt(0))){
+				lexer.getCurrentToken().code = Lexer.CONSTANT;
+				recognize(Lexer.CONSTANT);
+			}
+			else{
+				System.out.println("Syntax error in line " + token.line);
+					System.out.println("The variable cannot be declared using that syntax rule.");
+					//STOP!
+					System.exit(3);
+			}
 	}
 
 	public void conditional(){
 		recognize(Lexer.IF);
 		recognize(Lexer.LPAREN);
-		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
-			recognizeVariable();
-		else
-			recognize(Lexer.VARIABLE);
-		if (lexer.getCurrentToken().code != Lexer.EQUALS)
-			recognize(Lexer.DIFFERENT);
-		else
-			recognize(Lexer.EQUALS);
-		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
-			recognizeVariable();
-		recognize(Lexer.CONSTANT);
+		condition();
 		recognize(Lexer.RPAREN);
 		if(lexer.getCurrentToken().code != Lexer.ENDIF)
 			statementList();
 		else
 			recognize(Lexer.ENDIF);
+
 		recognize(Lexer.ELSE);
 		if(lexer.getCurrentToken().code != Lexer.ENDELSE)
 			statementList();
@@ -232,12 +266,95 @@ public class Parser{
 	public void cicloWhile(){
 		recognize(Lexer.WHILE);
 		recognize(Lexer.LPAREN);
-		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
+		condition();
+		recognize(Lexer.RPAREN);
+		if(lexer.getCurrentToken().code != Lexer.ENDWHILE)
+			statementList();
+		else
+			recognize(Lexer.ENDWHILE);
+	}
+
+	public void expr(){		
+		term();
+
+		while(lexer.getCurrentToken().code == Lexer.SUM){
+			term();
+		}
+	}
+
+	public void term(){
+		if(factor()){
+			while(lexer.getCurrentToken().code == Lexer.MULT){
+				if(!(factor())){
+					break;
+				}
+			}
+		}
+	}
+
+	public boolean factor(){
+		boolean vf = false;
+		if(lexer.getCurrentToken().code == Lexer.LPAREN){
+			expr();
+			vf = true;
+			recognize(Lexer.RPAREN);
+		}
+		else if(lexer.getCurrentToken().code == Lexer.VARIABLE){
 			recognizeVariable();
-		recognize(Lexer.VARIABLE);
+			vf = true;
+		}
+		else if(lexer.getCurrentToken().code == Lexer.CONSTANT){
+			recognize(Lexer.CONSTANT);
+			vf = true;
+		}
+		return vf;
+	}
+
+	public void condition(){
+		expr();
+		if(lexer.getCurrentToken().code == Lexer.EQUALS){
+			recognize(Lexer.EQUALS);
+		}
+		else
+			recognize(Lexer.DIFFERENT);
+		expr();
+	}
+
+	public void assignment(){
+		recognizeVariable();
+		recognize(Lexer.ASSIGN);
+		expr();
+	}
+
+	public boolean letter(char e){
+		if(((64<=e)||(90>=e))||((97<=e)||(122>=e)))
+			return true;
+		else
+			return false;
 	}
 	
-	
+	public boolean digit(char e){
+
+		if((48<=e)||(57>=e))
+			return true;
+		else
+			return false;
+	}
+
+	public boolean recognizeConstant(){
+
+		
+		for(int i = 0; i<token.text.length(); i++){
+
+			if(!digit(token.text.charAt(i)))
+				return false;
+
+		}
+		return true;
+		
+
+
+	}
 	public static void main(String args[])
 	{
 		try {

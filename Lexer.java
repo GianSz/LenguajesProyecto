@@ -83,7 +83,7 @@ public class Lexer{
 		keywordsTable.add(new Token(ELSE, "else", 0));
 		keywordsTable.add(new Token(ENDIF, "endif", 0));
 		keywordsTable.add(new Token(EQUALS, "==", 0));
-		keywordsTable.add(new Token(ASSIGN, "=", 0));
+		keywordsTable.add(new Token(ASSIGN, "->", 0));
 		keywordsTable.add(new Token(LPAREN, "(", 0));
 		keywordsTable.add(new Token(RPAREN, ")", 0));
 		keywordsTable.add(new Token(INT, "int", 0));
