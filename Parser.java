@@ -171,25 +171,9 @@ public class Parser{
 			r=true;			
 		}
 		else if (lexer.getCurrentToken().code == Lexer.IF){
-			recognize(Lexer.IF);
-			recognize(Lexer.LPAREN);
-			if (lexer.getCurrentToken().code != Lexer.CONSTANT)
-				recognizeVariable();
-			recognize(Lexer.VARIABLE);
-			if (lexer.getCurrentToken().code != Lexer.EQUALS)
-				recognize(Lexer.DIFFERENT);
-			recognize(Lexer.EQUALS);
-			if (lexer.getCurrentToken().code != Lexer.CONSTANT)
-				recognizeVariable();
-			recognize(Lexer.VARIABLE);
-			recognize(Lexer.RPAREN);
-			if(lexer.getCurrentToken().code != Lexer.ENDIF)
-				statementList();
-			recognize(Lexer.ENDIF);
-			recognize(Lexer.ELSE);
-			if(lexer.getCurrentToken().code != Lexer.ENDELSE)
-				statementList();
-			recognize(Lexer.ENDELSE);
+			conditional();
+			System.out.println("conditional function ok!");
+			r = true;
 		}
 		return r;
 	}
@@ -218,6 +202,28 @@ public class Parser{
 	**/
 	public void recognizeVariable(){
 		recognize(Lexer.VARIABLE);
+	}
+
+	public void conditional(){
+		recognize(Lexer.IF);
+		recognize(Lexer.LPAREN);
+		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
+			recognizeVariable();
+		recognize(Lexer.VARIABLE);
+		if (lexer.getCurrentToken().code != Lexer.EQUALS)
+			recognize(Lexer.DIFFERENT);
+		recognize(Lexer.EQUALS);
+		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
+			recognizeVariable();
+		recognize(Lexer.VARIABLE);
+		recognize(Lexer.RPAREN);
+		if(lexer.getCurrentToken().code != Lexer.ENDIF)
+			statementList();
+		recognize(Lexer.ENDIF);
+		recognize(Lexer.ELSE);
+		if(lexer.getCurrentToken().code != Lexer.ENDELSE)
+			statementList();
+		recognize(Lexer.ENDELSE);
 	}
 	
 	
