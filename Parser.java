@@ -209,13 +209,15 @@ public class Parser{
 		recognize(Lexer.LPAREN);
 		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
 			recognizeVariable();
-		recognize(Lexer.VARIABLE);
+		else
+			recognize(Lexer.VARIABLE);
 		if (lexer.getCurrentToken().code != Lexer.EQUALS)
 			recognize(Lexer.DIFFERENT);
-		recognize(Lexer.EQUALS);
+		else
+			recognize(Lexer.EQUALS);
 		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
 			recognizeVariable();
-		recognize(Lexer.VARIABLE);
+		recognize(Lexer.CONSTANT);
 		recognize(Lexer.RPAREN);
 		if(lexer.getCurrentToken().code != Lexer.ENDIF)
 			statementList();
@@ -224,6 +226,14 @@ public class Parser{
 		if(lexer.getCurrentToken().code != Lexer.ENDELSE)
 			statementList();
 		recognize(Lexer.ENDELSE);
+	}
+
+	public void cicloWhile(){
+		recognize(Lexer.WHILE);
+		recognize(Lexer.LPAREN);
+		if (lexer.getCurrentToken().code != Lexer.CONSTANT)
+			recognizeVariable();
+		recognize(Lexer.VARIABLE);
 	}
 	
 	

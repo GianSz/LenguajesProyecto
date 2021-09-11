@@ -37,6 +37,7 @@ public class Lexer{
 	public static final int WHILE = 20;
 	public static final int DIFFERENT = 22;
 	public static final int ENDELSE = 23;
+	public static final int ENDWHILE = 24;
 
 	//fileScanner: (Scanner) to iterate over the source file
 	private Scanner fileScanner;
@@ -89,7 +90,6 @@ public class Lexer{
 		keywordsTable.add(new Token(READ, "read", 0));
 		keywordsTable.add(new Token(PRINT, "print", 0));
 		keywordsTable.add(new Token(CALL, "call", 0));
-		keywordsTable.add(new Token(INVALIDTOKEN, "InvalidToken", 0));
 		keywordsTable.add(new Token(EOF, "EOF", 0));
 
 		//These next keywords were created by the team.
@@ -98,7 +98,7 @@ public class Lexer{
 		keywordsTable.add(new Token(WHILE, "while", 0));
 		keywordsTable.add(new Token(DIFFERENT, "/=", 0));
 		keywordsTable.add(new Token(ENDELSE, "endelse", 0));
-		keywordsTable.add(new Token(CONSTANT, "const", 0));
+		keywordsTable.add(new Token(ENDWHILE, "endwhile", 0));
 		
 		
 		
