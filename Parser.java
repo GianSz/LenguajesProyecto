@@ -221,7 +221,8 @@ public class Parser{
 		recognize(Lexer.RPAREN);
 		if(lexer.getCurrentToken().code != Lexer.ENDIF)
 			statementList();
-		recognize(Lexer.ENDIF);
+		else
+			recognize(Lexer.ENDIF);
 		recognize(Lexer.ELSE);
 		if(lexer.getCurrentToken().code != Lexer.ENDELSE)
 			statementList();
