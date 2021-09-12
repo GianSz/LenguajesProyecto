@@ -291,7 +291,7 @@ public class Parser{
 	{
 		try {
 			//String fileName = args[0];
-			Parser parser = new Parser("testCicle-error.txt");
+			Parser parser = new Parser("testCondition.txt");
 				} catch (Exception e)
 		{
 			e.printStackTrace();

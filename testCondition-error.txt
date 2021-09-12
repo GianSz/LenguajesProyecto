@@ -1,0 +1,15 @@
+program
+    def main ( int edad int edad2 )
+        if ( edad > edad2 )
+            while ( edad2 != edad )
+                edad2 -> edad2 + 1
+            endwhile
+        endif
+
+        else
+            while ( edad != edad2 )
+                edad2 -> edad2 - 1
+            endwhile
+        endelse
+    enddef
+endprogram
