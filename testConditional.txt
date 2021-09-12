@@ -1,0 +1,17 @@
+program
+    def main ( int a int b )
+       
+        a -> 3
+        b -> 7
+
+        if ( a == b )
+            print a
+        endif
+
+        else
+            print a
+            print b
+        endelse
+
+    enddef
+endprogram
