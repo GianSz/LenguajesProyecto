@@ -1,14 +1,14 @@
 program
-    def main ( int edad int edad2 )
-        if ( edad > edad2 )
-            while ( edad2 != edad )
-                edad2 -> edad2 + 1
+    def main ( int age int age2 )
+        if ( age > age2 )
+            while ( age2 != age )
+                age2 -> age2 + 1
             endwhile
         endif
 
         else
-            while ( edad != edad2 )
-                edad2 -> edad2 - 1
+            while ( age != age2 )
+                age2 -> age2 - 1
             endwhile
         endelse
     enddef

@@ -180,7 +180,7 @@ public class Parser{
 			r=true;
 		}
 		else if(lexer.getCurrentToken().code == Lexer.WHILE){
-			cicloWhile();
+			cicle();
 			System.out.println("while ok!");
 			r=true;
 		}
@@ -230,7 +230,7 @@ public class Parser{
 		recognize(Lexer.ENDELSE);
 	}
 
-	public void cicloWhile(){
+	public void cicle(){
 		recognize(Lexer.WHILE);
 		recognize(Lexer.LPAREN);
 		condition();
@@ -291,7 +291,7 @@ public class Parser{
 	{
 		try {
 			//String fileName = args[0];
-			Parser parser = new Parser("testConstant-error.txt");
+			Parser parser = new Parser("testStatement-error.txt");
 				} catch (Exception e)
 		{
 			e.printStackTrace();

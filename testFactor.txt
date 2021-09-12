@@ -1,0 +1,11 @@
+program
+    def main ( )
+        int a
+        int b
+        int c
+
+        a -> 3
+        b -> ( a + 6 ) * ( a + 2 )
+        c -> a
+    enddef
+endprogram

@@ -1,0 +1,7 @@
+program
+    def main ( )
+        int a
+        a -> 3 * 5
+        print a
+    enddef
+endprogram

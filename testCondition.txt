@@ -1,12 +1,12 @@
 program
-    def main ( int edad int edad2 )
-        if ( edad /= edad2 )
-            print edad
-            print edad2
+    def main ( int age int age2 )
+        if ( age /= age2 )
+            print age
+            print age2
         endif
 
         else
-            print edad
+            print age
         endelse
     enddef
 endprogram

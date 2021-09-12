@@ -1,0 +1,7 @@
+program 
+    def main ( )
+        int var
+        var -> 9 / 3
+        print var
+    enddef
+endprogram

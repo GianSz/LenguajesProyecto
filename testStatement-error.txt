@@ -1,0 +1,7 @@
+program
+    def main ( int a )
+        while ( a + 3 /= 6 )
+            int b -> ( a + 3 ) + 1
+        endwhile
+    enddef
+endprogram

@@ -1,0 +1,8 @@
+program
+    def main ( )
+        int a
+        a -> 8
+        b -> 2
+        c -> ( a + 1 ) * ( b + 5
+    enddef
+endprogram
