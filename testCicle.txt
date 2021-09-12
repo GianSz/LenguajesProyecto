@@ -1,0 +1,10 @@
+program
+    def main ( int var int var2 )
+        var -> 2
+        var2 -> 6
+
+        while ( var /= var2 )
+            var -> var + 1
+        endwhile
+    enddef
+endprogram

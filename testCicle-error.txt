@@ -1,0 +1,9 @@
+program
+    def main ( int var )
+        var -> 11
+
+        while ( )
+            var -> var + 1
+        endwhile
+    enddef
+endprogram
