@@ -1,5 +1,6 @@
 program
     def main ( )
+        int x
         x -> 34b
     endef
 endprogram
