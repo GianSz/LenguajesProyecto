@@ -274,9 +274,7 @@ public class Lexer{
 
 	public boolean letter(char e){
 
-		int ascii = e;
-
-		if(((64<=ascii)&&(90>=ascii))||((97<=ascii)&&(122>=ascii)))
+		if(((64<=e)&&(90>=e))||((97<=e)&&(122>=e)))
 			return true;
 		else
 			return false;

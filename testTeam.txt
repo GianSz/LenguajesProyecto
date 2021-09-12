@@ -3,12 +3,12 @@ program
         int i
         int acum
         int j
-        i -> x
+        i -> in
         acum -> 0
         j -> 0
         if ( i == 10 )
             while ( j /= i )
-                acum -> acum + j * ( j + 1 )
+                acum -> acum + j * ( i + 1 )
                 j -> j + 1
             endwhile
         endif
