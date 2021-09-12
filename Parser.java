@@ -90,12 +90,7 @@ public class Parser{
 		//checks for "def"
 		recognize(Lexer.DEF);
 		//checks for <variable>
-		if(recognizeVariable())
-			recognize(Lexer.VARIABLE);
-		else{
-			lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-			recognize(Lexer.VARIABLE);
-		}
+		recognize(Lexer.VARIABLE);
 		//checks for "("
 		recognize(Lexer.LPAREN);
 		//verifies if there are parameters
@@ -130,12 +125,7 @@ public class Parser{
 	public void varDef(){
 		recognize(Lexer.INT);
 		//recognize(Lexer.VARIABLE);
-		if(recognizeVariable())
-			recognize(Lexer.VARIABLE);
-		else{
-			lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-			recognize(Lexer.VARIABLE);
-		}
+		recognize(Lexer.VARIABLE);
 
 	}
 	/**
@@ -158,24 +148,14 @@ public class Parser{
 		if (lexer.getCurrentToken().code == Lexer.READ){
 			recognize(Lexer.READ);
 
-			if(recognizeVariable())
-				recognize(Lexer.VARIABLE);
-			else{
-				lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-				recognize(Lexer.VARIABLE);
-			}
+			recognize(Lexer.VARIABLE);
 			System.out.println("Read ok!");
 			r=true;
 		} //checks for print <variable>
 		else if (lexer.getCurrentToken().code == Lexer.PRINT){
 			recognize(Lexer.PRINT);
 
-			if(recognizeVariable())
-				recognize(Lexer.VARIABLE);
-			else{
-				lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-				recognize(Lexer.VARIABLE);
-			}
+			recognize(Lexer.VARIABLE);
 			System.out.println("Print ok!");
 			r=true;
 		} //checks for call <variable> <lparen> [argumentList] <rparen>
@@ -183,12 +163,7 @@ public class Parser{
 			//checks for "call"
 			recognize(Lexer.CALL);
 			//checks for <variable>
-			if(recognizeVariable())
-				recognize(Lexer.VARIABLE);
-			else{
-				lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-				recognize(Lexer.VARIABLE);
-			}
+			recognize(Lexer.VARIABLE);
 			//checks for <lparen>
 			recognize(Lexer.LPAREN);
 			//verifies if there is an argument list
@@ -232,50 +207,13 @@ public class Parser{
 		Function argumentDef: verifies the production <argumentDef> ::= <variable>
 	**/
 	public void argumentDef(){
-		//recognize(Lexer.VARIABLE);  teacher
-		if(recognizeVariable())
-			recognize(Lexer.VARIABLE);
-		else{
-			lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-			recognize(Lexer.VARIABLE);
-		}
+		recognize(Lexer.VARIABLE);	
 	}
 	
 	/**
 		Function recognizeVariable: verifies for variables
 	
 	**/
-	public boolean recognizeVariable(){
-
-		boolean var = true;
-
-		if(token.text.length() == 1){
-			if(letter(token.text.charAt(0)))
-				var = true;
-			else
-				var = false;
-		}
-		else{
-			if(letter(token.text.charAt(0))){
-
-				for(int i = 1; i<token.text.length(); i++){
-
-					if(letter(token.text.charAt(i)) || digit(token.text.charAt(i))){
-						var = true;
-					}
-
-					else
-						var = false;
-
-				}
-
-			}
-			else
-				var = false;
-		}
-		return var;
-	}
-
 	public void conditional(){
 		recognize(Lexer.IF);
 		recognize(Lexer.LPAREN);
@@ -307,6 +245,7 @@ public class Parser{
 		term();
 
 		while(lexer.getCurrentToken().code == Lexer.SUM){
+			recognize(Lexer.SUM);
 			term();
 		}
 	}
@@ -314,23 +253,21 @@ public class Parser{
 	public void term(){
 		factor();
 		while(lexer.getCurrentToken().code == Lexer.MULT){
+			recognize(Lexer.MULT);
 			factor();
 		}
 	}
 
 	public void factor(){
 		if(lexer.getCurrentToken().code == Lexer.LPAREN){
+			recognize(Lexer.LPAREN);
 			expr();
 			recognize(Lexer.RPAREN);
 		}
-		else if(lexer.getCurrentToken().code == Lexer.VARIABLE){
-			if(recognizeVariable()){
-				recognize(Lexer.VARIABLE);
-			}
-			else
-				recognizeConstant();
-
-		}
+		else if(lexer.getCurrentToken().code == Lexer.VARIABLE)
+			recognize(Lexer.VARIABLE);
+		else
+			recognize(Lexer.CONSTANT);
 	}
 
 	public void condition(){
@@ -345,64 +282,16 @@ public class Parser{
 
 	public void assignment(){
 
-		if(recognizeVariable())
-			recognize(Lexer.VARIABLE);
-		else{
-			lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-			recognize(Lexer.VARIABLE);
-		}
-
+		recognize(Lexer.VARIABLE);
 		recognize(Lexer.ASSIGN);
 		expr();
 	}
 
-	public boolean letter(char e){
-
-		int ascii = e;
-
-		System.out.println(ascii);
-
-		if(((64<=ascii)&&(90>=ascii))||((97<=ascii)&&(122>=ascii)))
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean digit(char e){
-
-		if((48<=e)&&(57>=e))
-			return true;
-		else
-			return false;
-	}
-
-	public void recognizeConstant(){
-		
-		lexer.getCurrentToken().code = Lexer.CONSTANT;
-
-		if(token.text.length()==1){
-			if(!digit(token.text.charAt(0))){
-				lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-			}
-		}
-		else{
-			if(digit(token.text.charAt(0))){
-				for(int i = 1; i< token.text.length(); i++){
-					if(!digit(token.text.charAt(i)))
-						lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-				}
-			}
-			else
-				lexer.getCurrentToken().code = Lexer.INVALIDTOKEN;
-		}
-
-		recognize(Lexer.CONSTANT);
-	}
 	public static void main(String args[])
 	{
 		try {
 			//String fileName = args[0];
-			Parser parser = new Parser("testX.txt");
+			Parser parser = new Parser("test1.txt");
 				} catch (Exception e)
 		{
 			e.printStackTrace();

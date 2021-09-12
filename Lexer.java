@@ -204,10 +204,89 @@ public class Lexer{
 		
 		//If the token was not found, it is a variable
 		if (tokenCode ==-1)
-			tokenCode = VARIABLE;
+			//tokenCode = VARIABLE;
+			if(recognizeVariable(tokenText)){
+				tokenCode = VARIABLE;
+			}
+			else if(recognizeConstant(tokenText))
+				tokenCode = CONSTANT;
+			else
+				tokenCode = INVALIDTOKEN;
+
 		
 		//Return the actual token code
 		return tokenCode;
 	}
+
+	public boolean recognizeVariable(String tokenText){
+
+		boolean var = true;
+
+		if(tokenText.length() == 1){
+			if(letter(tokenText.charAt(0)))
+				var = true;
+			else
+				var = false;
+		}
+		else{
+			if(letter(tokenText.charAt(0))){
+
+				for(int i = 1; i<tokenText.length(); i++){
+
+					if(letter(tokenText.charAt(i)) || digit(tokenText.charAt(i))){
+						var = true;
+					}
+
+					else
+						var = false;
+
+				}
+
+			}
+			else
+				var = false;
+		}
+		return var;
+	}
 	
+	public boolean recognizeConstant(String tokenText){
+		
+		boolean var = true;
+
+		if(tokenText.length()==1){
+			if(!digit(tokenText.charAt(0))){
+				var = false;
+			}
+		}
+		else{
+			if(digit(tokenText.charAt(0))){
+				for(int i = 1; i< tokenText.length(); i++){
+					if(!digit(tokenText.charAt(i)))
+						var = false;
+				}
+			}
+			else
+				var = false;
+		}
+		return var;
+
+	}
+
+	public boolean letter(char e){
+
+		int ascii = e;
+
+		if(((64<=ascii)&&(90>=ascii))||((97<=ascii)&&(122>=ascii)))
+			return true;
+		else
+			return false;
+	}
+
+	public boolean digit(char e){
+
+		if((48<=e)&&(57>=e))
+			return true;
+		else
+			return false;
+	}
 }
