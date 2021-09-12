@@ -1,0 +1,5 @@
+program
+    def main ( )
+        x -> 34
+    enddef
+endprogram
