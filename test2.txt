@@ -3,8 +3,8 @@ program
 		int c
 	enddef
 	
-	 sumar def ( int x int y )
-		int z
+	 def sumar ( int x int y )
+		int z -> x + y
 	enddef
 	
 endprogram
