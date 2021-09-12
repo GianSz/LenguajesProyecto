@@ -1,0 +1,6 @@
+program
+    def main ( int prueba int prueba1 )
+        prueba -> 4
+        prueba1 -> 3
+    enddef
+endprogram
