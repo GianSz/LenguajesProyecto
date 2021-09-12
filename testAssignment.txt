@@ -1,0 +1,6 @@
+program
+    def main ( int a int sum )
+        a -> 3
+        sum -> a + 2
+    enddef
+endprogram

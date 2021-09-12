@@ -1,0 +1,6 @@
+program
+    def main ( int a int b )
+        a = 8
+        3 -> b
+    enddef
+endprogram
