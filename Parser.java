@@ -290,8 +290,8 @@ public class Parser{
 	public static void main(String args[])
 	{
 		try {
-			//String fileName = args[0];
-			Parser parser = new Parser("testLetter.txt");
+			String fileName = args[0];
+			Parser parser = new Parser(fileName);
 				} catch (Exception e)
 		{
 			e.printStackTrace();
